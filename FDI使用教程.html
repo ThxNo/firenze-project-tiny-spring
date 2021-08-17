@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>FDI使用教程</title>
+</head>
+<body><h1 id='fdi使用教程'>FDI使用教程</h1>
+<h2 id='a-simple-example'>A Simple Example</h2>
+<p>定义需要注入的Class</p>
+<pre><code class='language-java' lang='java'>public class AEngine implements Engine {
+	@Override
+	public String getName() { return &quot;AEngine&quot;; }
+}
+</code></pre>
+<p>将需要注入的Class添加进Container中进行管理</p>
+<pre><code class='language-java' lang='java'>ContainerConfig config = new ContainerConfig() {
+  @Override
+            public void configure() {
+              bind(Engine.class).to(AEngine.class);
+            }
+};
+
+FDIContainer container = new FDIContainer(config);
+</code></pre>
+<p>从Container中获取注入的Class，此时从Container中获取的engine名称便是AEngine</p>
+<pre><code class='language-java' lang='java'>Engine engine = container.get(Engine.class);
+assertThat(engine.getName()).isEqualTo(&quot;AEngine&quot;);
+</code></pre>
+<h2 id='使用inject实现class依赖注入'>使用@Inject实现Class依赖注入</h2>
+<p>@Inject实现依赖注入有两种方式，构造器注入和field注入</p>
+<h3 id='field注入'>Field注入</h3>
+<pre><code class='language-java' lang='java'>public class Car {
+  @Inject
+	private Engine engine;
+		
+	public getEngine() { return engine; }
+}
+</code></pre>
+<h3 id='构造器注入'>构造器注入</h3>
+<pre><code class='language-java' lang='java'>public class Car {
+	private Engine engine;
+	@Inject
+  public Car(Engine engine) { this.engine = engine; }
+	public getEngine() { return engine; }
+}
+</code></pre>
+<h3 ></h3>
+<p>从Container中获取注入的Car，此时Container中获取的Car实例的engine名称便是AEngine</p>
+<pre><code class='language-java' lang='java'>Engine car = container.get(Car.class);
+assertThat(car.getEngine().class).isEqualTo(AEngine.class);
+</code></pre>
+<h2 id='使用named指定注入的实例对象'>使用@Named指定注入的实例对象</h2>
+<pre><code class='language-java' lang='java'>public class AEngine implements Engine {
+	@Override
+	public String getName() { return &quot;AEngine&quot;; }
+}
+</code></pre>
+<pre><code class='language-java' lang='java'>public class BEngine implements Engine {
+	@Override
+	public String getName() { return &quot;BEngine&quot;; }
+}
+</code></pre>
+<p>将其注入到Container中后，获取Engine的实例</p>
+<pre><code class='language-java' lang='java'>public class Car {
+  @Inject
+	private @Named(&quot;BEngine&quot;) Engine engine;
+		
+	public getEngine() { return engine; }
+}
+</code></pre>
+<p>从Container中获取注入的Car，此时Container中获取的Car实例的engine名称便是BEngine</p>
+<pre><code class='language-java' lang='java'>Engine car = container.get(Car.class);
+assertThat(car.getEngine().class).isEqualTo(BEngine.class);
+</code></pre>
+</body>
+</html>
