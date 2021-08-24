@@ -33,7 +33,7 @@ assertThat(engine.getName()).isEqualTo(&quot;AEngine&quot;);
 <div class="example">
 <h2 id='使用inject实现class依赖注入'>使用@Inject实现Class依赖注入</h2>
 <p>@Inject实现依赖注入有两种方式，构造器注入和field注入</p>
-<h3 id='field注入'>Field注入</h3>
+<h3 id='field注入'><span class="function" data-action="initContainer">Field注入</span></h3>
 <pre><code class='language-java' lang='java'>public class Car {
   @Inject
 	private Engine engine;
@@ -50,7 +50,10 @@ assertThat(engine.getName()).isEqualTo(&quot;AEngine&quot;);
 }
 </code></pre>
 <h3></h3>
-<p>从Container中获取注入的Car，此时Container中获取的Car实例的engine名称便是AEngine</p>
+    <p>从Container中获取注入的
+        <span class="assertion" data-expect="equal" data-action="getCarName">FieldInjectedCar</span>
+        ，此时Container中获取的Car实例的engine名称便是
+        <span class="assertion" data-expect="equal" data-action="getCarEngineName">AEngine</span></p>
 <pre><code class='language-java' lang='java'>Engine car = container.get(Car.class);
 assertThat(car.getEngine().class).isEqualTo(AEngine.class);
 </code></pre>
