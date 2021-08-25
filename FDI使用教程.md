@@ -90,7 +90,7 @@ public class BEngine implements Engine {
 将其注入到Container中后，获取Engine的实例
 
 ```java
-public class Car {
+public class NamedEngineCar {
   @Inject
 	private @Named("BEngine") Engine engine;
 		
