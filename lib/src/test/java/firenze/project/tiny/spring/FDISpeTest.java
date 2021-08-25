@@ -7,6 +7,7 @@ import com.thoughtworks.fusheng.integration.junit5.FuShengTest;
 import firenze.project.tiny.spring.di.ContainerConfig;
 import firenze.project.tiny.spring.di.FDIContainer;
 import firenze.project.tiny.spring.example.Car;
+import firenze.project.tiny.spring.example.ConstructorInjectedCar;
 import firenze.project.tiny.spring.example.Engine;
 import firenze.project.tiny.spring.example.MockContainerConfig;
 
@@ -28,5 +29,13 @@ public class FDISpeTest {
 
     public String getCarEngineName() {
         return container.get(Car.class).getEngine().getName();
+    }
+
+    public String getConstructorInjectedCarName() {
+        return container.get(ConstructorInjectedCar.class).getName();
+    }
+
+    public String getConstructorInjectedCarEngineName() {
+        return container.get(ConstructorInjectedCar.class).getEngine().getName();
     }
 }

@@ -7,5 +7,6 @@ public class MockContainerConfig extends ContainerConfig {
     public void init() {
         bind(Engine.class).to(AEngine.class);
         bind(Car.class).to(FieldInjectedCar.class);
+        bind(ConstructorInjectedCar.class).to(ConstructorInjectedCar.class);
     }
 }

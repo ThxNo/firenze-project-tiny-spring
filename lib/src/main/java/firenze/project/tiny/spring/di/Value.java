@@ -17,6 +17,10 @@ public class Value {
         return (T) obj;
     }
 
+    public Class<?> getType() {
+        return type;
+    }
+
     public void setType(Class<?> type) {
         this.type = type;
     }

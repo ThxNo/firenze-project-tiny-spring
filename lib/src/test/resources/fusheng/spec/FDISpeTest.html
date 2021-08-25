@@ -41,20 +41,28 @@ assertThat(engine.getName()).isEqualTo(&quot;AEngine&quot;);
 	public getEngine() { return engine; }
 }
 </code></pre>
-<h3 id='构造器注入'>构造器注入</h3>
-<pre><code class='language-java' lang='java'>public class Car {
+    <p>从Container中获取注入的
+        <span class="assertion" data-expect="equal" data-action="getCarName">FieldInjectedCar</span>
+        ，此时Container中获取的Car实例的engine名称便是
+        <span class="assertion" data-expect="equal" data-action="getCarEngineName">AEngine</span></p>
+<pre><code class='language-java' lang='java'>Engine car = container.get(Car.class);
+assertThat(car.getEngine().class).isEqualTo(AEngine.class);
+</code></pre>
+</div>
+<div class="example">
+    <h3 id='构造器注入'>构造器注入</h3>
+    <pre><code class='language-java' lang='java'>public class Car {
 	private Engine engine;
 	@Inject
   public Car(Engine engine) { this.engine = engine; }
 	public getEngine() { return engine; }
 }
 </code></pre>
-<h3></h3>
     <p>从Container中获取注入的
-        <span class="assertion" data-expect="equal" data-action="getCarName">FieldInjectedCar</span>
+        <span class="assertion" data-expect="equal" data-action="getConstructorInjectedCarName">ConstructorInjectedCar</span>
         ，此时Container中获取的Car实例的engine名称便是
-        <span class="assertion" data-expect="equal" data-action="getCarEngineName">AEngine</span></p>
-<pre><code class='language-java' lang='java'>Engine car = container.get(Car.class);
+        <span class="assertion" data-expect="equal" data-action="getConstructorInjectedCarEngineName">AEngine</span></p>
+    <pre><code class='language-java' lang='java'>Engine car = container.get(Car.class);
 assertThat(car.getEngine().class).isEqualTo(AEngine.class);
 </code></pre>
 </div>
