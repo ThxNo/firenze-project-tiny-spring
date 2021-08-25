@@ -17,6 +17,14 @@ public class Value {
         return (T) obj;
     }
 
+    public boolean objExisted() {
+        return obj != null;
+    }
+
+    public void setObj(Object obj) {
+        this.obj = obj;
+    }
+
     public Class<?> getType() {
         return type;
     }

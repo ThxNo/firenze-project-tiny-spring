@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class FDIContainer {
-    private Map<Key<?>, Value> map;
-    private List<Key> keyLock = new ArrayList<>();
+    private final Map<Key<?>, Value> map;
+    private final List<Key<?>> keyLock = new ArrayList<>();
 
     public FDIContainer(ContainerConfig config) {
         map = config.toMap();
@@ -20,7 +20,8 @@ public class FDIContainer {
 
     public <T> T get(Class<T> clazz) {
         Key<T> key = Key.get(clazz);
-        return inject(key);
+        Value value = map.get(key);
+        return value.objExisted() ? value.getObj() : inject(key);
     }
 
     private <T> T inject(Key<T> key) {
@@ -34,7 +35,7 @@ public class FDIContainer {
 
     private Object constructorInject(Value value) {
         Constructor<?>[] constructors = value.getType().getConstructors();
-        return Stream.of(constructors)
+        Object obj = Stream.of(constructors)
                 .filter(constructor -> constructor.isAnnotationPresent(Inject.class))
                 .findFirst()
                 .map(constructor -> {
@@ -44,6 +45,8 @@ public class FDIContainer {
                         throw new RuntimeException("constructor inject failed");
                     }
                 }).orElse(value.getObj());
+        value.setObj(obj);
+        return obj;
     }
 
     private void fieldInject(Object obj) {
