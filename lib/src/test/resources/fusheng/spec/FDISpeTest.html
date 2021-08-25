@@ -34,7 +34,7 @@ assertThat(engine.getName()).isEqualTo(&quot;AEngine&quot;);
 <h2 id='使用inject实现class依赖注入'>使用@Inject实现Class依赖注入</h2>
 <p>@Inject实现依赖注入有两种方式，构造器注入和field注入</p>
 <h3 id='field注入'><span class="function" data-action="initContainer">Field注入</span></h3>
-<pre><code class='language-java' lang='java'>public class Car {
+<pre><code class='language-java' lang='java'>public class FieldInjectedCar implements Car {
   @Inject
 	private Engine engine;
 		
@@ -45,16 +45,16 @@ assertThat(engine.getName()).isEqualTo(&quot;AEngine&quot;);
         <span class="assertion" data-expect="equal" data-action="getCarName">FieldInjectedCar</span>
         ，此时Container中获取的Car实例的engine名称便是
         <span class="assertion" data-expect="equal" data-action="getCarEngineName">AEngine</span></p>
-<pre><code class='language-java' lang='java'>Engine car = container.get(Car.class);
+<pre><code class='language-java' lang='java'>Engine car = container.get(FieldInjectedCar.class);
 assertThat(car.getEngine().class).isEqualTo(AEngine.class);
 </code></pre>
 </div>
 <div class="example">
     <h3 id='构造器注入'>构造器注入</h3>
-    <pre><code class='language-java' lang='java'>public class Car {
+    <pre><code class='language-java' lang='java'>public class ConstructorInjectedCar implements Car {
 	private Engine engine;
 	@Inject
-  public Car(Engine engine) { this.engine = engine; }
+  public ConstructorInjectedCar(Engine engine) { this.engine = engine; }
 	public getEngine() { return engine; }
 }
 </code></pre>
@@ -62,7 +62,7 @@ assertThat(car.getEngine().class).isEqualTo(AEngine.class);
         <span class="assertion" data-expect="equal" data-action="getConstructorInjectedCarName">ConstructorInjectedCar</span>
         ，此时Container中获取的Car实例的engine名称便是
         <span class="assertion" data-expect="equal" data-action="getConstructorInjectedCarEngineName">AEngine</span></p>
-    <pre><code class='language-java' lang='java'>Engine car = container.get(Car.class);
+    <pre><code class='language-java' lang='java'>Engine car = container.get(ConstructorInjectedCar.class);
 assertThat(car.getEngine().class).isEqualTo(AEngine.class);
 </code></pre>
 </div>

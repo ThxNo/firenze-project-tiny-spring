@@ -38,7 +38,7 @@ assertThat(engine.getName()).isEqualTo("AEngine");
 ### Field注入
 
 ```java
-public class Car {
+public class FieldInjectedCar implements Car {
   @Inject
 	private Engine engine;
 		
@@ -46,23 +46,28 @@ public class Car {
 }
 ```
 
+从Container中获取注入的Car，此时Container中获取的Car实例的engine名称便是AEngine
+
+```java
+Engine car = container.get(FieldInjectedCar.class);
+assertThat(car.getEngine().class).isEqualTo(AEngine.class);
+```
+
 ### 构造器注入
 
 ```java
-public class Car {
+public class ConstructorInjectedCar implements Car {
 	private Engine engine;
 	@Inject
-  public Car(Engine engine) { this.engine = engine; }
+  public ConstructorInjectedCar(Engine engine) { this.engine = engine; }
 	public getEngine() { return engine; }
 }
 ```
 
-### 
-
 从Container中获取注入的Car，此时Container中获取的Car实例的engine名称便是AEngine
 
 ```java
-Engine car = container.get(Car.class);
+Engine car = container.get(FieldInjectedCar.class);
 assertThat(car.getEngine().class).isEqualTo(AEngine.class);
 ```
 
