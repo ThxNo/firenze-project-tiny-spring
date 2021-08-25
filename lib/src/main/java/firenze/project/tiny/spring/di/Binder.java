@@ -17,8 +17,13 @@ public class Binder<T> {
         return value;
     }
 
-    public Binder to(Class<T> clazz) {
+    public Binder<T> to(Class<T> clazz) {
         value.setType(clazz);
+        return this;
+    }
+
+    public Binder<T> named(String name) {
+        key.setName(name);
         return this;
     }
 }

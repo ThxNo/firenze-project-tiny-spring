@@ -4,6 +4,7 @@ package firenze.project.tiny.spring.di;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +21,11 @@ public class FDIContainer {
 
     public <T> T get(Class<T> clazz) {
         Key<T> key = Key.get(clazz);
+        Value value = map.get(key);
+        return value.objExisted() ? value.getObj() : inject(key);
+    }
+    public <T> T get(String name, Class<T> clazz) {
+        Key<T> key = Key.get(name, clazz);
         Value value = map.get(key);
         return value.objExisted() ? value.getObj() : inject(key);
     }
@@ -40,13 +46,20 @@ public class FDIContainer {
                 .findFirst()
                 .map(constructor -> {
                     try {
-                        return constructor.newInstance(Arrays.stream(constructor.getParameterTypes()).map(this::get).toArray());
+                        return constructor.newInstance(getArgs(constructor));
                     } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
                         throw new RuntimeException("constructor inject failed");
                     }
                 }).orElse(value.getObj());
         value.setObj(obj);
         return obj;
+    }
+
+    private Object[] getArgs(Constructor<?> constructor) {
+        Parameter[] parameters = constructor.getParameters();
+        return Arrays.stream(parameters).map(parameter -> parameter.isAnnotationPresent(Named.class) ?
+                this.get(parameter.getAnnotation(Named.class).value(), parameter.getType()) :
+                this.get(parameter.getType())).toArray();
     }
 
     private void fieldInject(Object obj) {
@@ -57,7 +70,7 @@ public class FDIContainer {
                 .forEach(field -> {
                     field.setAccessible(true);
                     try {
-                        field.set(obj, this.get(field.getType()));
+                        field.set(obj, field.isAnnotationPresent(Named.class) ? this.get(field.getAnnotation(Named.class).value(), field.getType()) : this.get(field.getType()));
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
