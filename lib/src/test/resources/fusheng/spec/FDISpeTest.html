@@ -25,6 +25,10 @@
 
 FDIContainer container = new FDIContainer(config);
 </code></pre>
+    <p>或传入目标包名自动注入Container</p>
+    <pre><code class='language-java' lang='java'>        ContainerConfig containerConfig = new AutoContainerConfig(&quot;packageName&quot;);
+        FDIContainer container = new FDIContainer(containerConfig);
+</code></pre>
     <p>从Container中获取注入的Class，此时从Container中获取的engine名称便是<span class="assertion" data-expect="equal" data-action="getEngineName">AEngine</span></p>
     <pre><code class='language-java' lang='java'>Engine engine = container.get(Engine.class);
 assertThat(engine.getName()).isEqualTo(&quot;AEngine&quot;);
