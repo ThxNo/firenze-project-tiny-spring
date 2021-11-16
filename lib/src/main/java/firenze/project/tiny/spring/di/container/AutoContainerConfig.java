@@ -5,8 +5,10 @@ import lombok.SneakyThrows;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
@@ -42,15 +44,25 @@ public class AutoContainerConfig extends ContainerConfig {
         targets.add(clazz);
         while (!targets.isEmpty()) {
             Class<?> target = targets.poll();
-            if (clazz.isAnnotationPresent(Named.class)) {
-                bind(target).named(clazz.getAnnotation(Named.class).value()).to(clazz);
-            } else {
-                bind(target).to(clazz);
-            }
-            if (Objects.nonNull(target.getSuperclass()) && !Objects.equals(target.getSuperclass(), Object.class)) {
-                targets.add(target.getSuperclass());
-            }
-            targets.addAll(Arrays.asList(target.getInterfaces()));
+            bind(clazz, target);
+            targets.addAll(getNext(target));
+        }
+    }
+
+    private List<Class<?>> getNext(Class<?> target) {
+        List<Class<?>> result = new ArrayList<>();
+        if (Objects.nonNull(target.getSuperclass()) && !Objects.equals(target.getSuperclass(), Object.class)) {
+            result.add(target.getSuperclass());
+        }
+        result.addAll(Arrays.asList(target.getInterfaces()));
+        return result;
+    }
+
+    private void bind(Class<?> clazz, Class<?> target) {
+        if (clazz.isAnnotationPresent(Named.class)) {
+            bind(target).named(clazz.getAnnotation(Named.class).value()).to(clazz);
+        } else {
+            bind(target).to(clazz);
         }
     }
 
