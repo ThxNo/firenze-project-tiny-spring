@@ -78,7 +78,18 @@ assertThat(car.getEngine().class).isEqualTo(AEngine.class);
 	public String getName() { return &quot;BEngine&quot;; }
 }
 </code></pre>
-<p>将其<span class="function" data-action="initContainer">注入到Container</span>中后，获取Engine的实例</p>
+    <p>通过</p>
+    <pre><code class='language-java' lang='java'>ContainerConfig config = new ContainerConfig() {
+  @Override
+            public void configure() {
+              bind(Engine.class).named(&quot;BEngine&quot;).to(BEngine.class);
+              bind(Engine.class).named(&quot;AEngine&quot;).to(AEngine.class);
+            }
+};
+
+FDIContainer container = new FDIContainer(config);
+            </code></pre>
+    <p>将其<span class="function" data-action="initContainer">注入到Container</span>中后，获取Engine的实例</p>
 <pre><code class='language-java' lang='java'>public class NamedEngineCar {
   @Inject
 	private @Named(&quot;BEngine&quot;) Engine engine;

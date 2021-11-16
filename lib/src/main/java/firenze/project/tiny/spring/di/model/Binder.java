@@ -1,4 +1,4 @@
-package firenze.project.tiny.spring.di;
+package firenze.project.tiny.spring.di.model;
 
 public class Binder<T> {
     private final Key<T> key;

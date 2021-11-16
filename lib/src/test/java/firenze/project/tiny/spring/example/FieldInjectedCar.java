@@ -1,6 +1,6 @@
 package firenze.project.tiny.spring.example;
 
-import firenze.project.tiny.spring.di.Inject;
+import firenze.project.tiny.spring.di.annotations.Inject;
 
 public class FieldInjectedCar implements Car {
     @Inject

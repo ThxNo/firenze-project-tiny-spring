@@ -1,5 +1,10 @@
-package firenze.project.tiny.spring.di;
+package firenze.project.tiny.spring.di.container;
 
+
+import firenze.project.tiny.spring.di.annotations.Inject;
+import firenze.project.tiny.spring.di.annotations.Named;
+import firenze.project.tiny.spring.di.model.Key;
+import firenze.project.tiny.spring.di.model.Value;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

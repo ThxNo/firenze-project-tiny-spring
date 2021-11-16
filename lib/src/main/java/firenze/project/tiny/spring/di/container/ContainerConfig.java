@@ -1,4 +1,8 @@
-package firenze.project.tiny.spring.di;
+package firenze.project.tiny.spring.di.container;
+
+import firenze.project.tiny.spring.di.model.Binder;
+import firenze.project.tiny.spring.di.model.Key;
+import firenze.project.tiny.spring.di.model.Value;
 
 import java.util.ArrayList;
 import java.util.List;

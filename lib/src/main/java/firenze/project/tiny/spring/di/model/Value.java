@@ -1,4 +1,4 @@
-package firenze.project.tiny.spring.di;
+package firenze.project.tiny.spring.di.model;
 
 import java.lang.reflect.InvocationTargetException;
 

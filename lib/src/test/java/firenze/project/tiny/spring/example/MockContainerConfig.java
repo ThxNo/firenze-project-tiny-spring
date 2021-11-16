@@ -1,6 +1,6 @@
 package firenze.project.tiny.spring.example;
 
-import firenze.project.tiny.spring.di.ContainerConfig;
+import firenze.project.tiny.spring.di.container.ContainerConfig;
 
 public class MockContainerConfig extends ContainerConfig {
     @Override

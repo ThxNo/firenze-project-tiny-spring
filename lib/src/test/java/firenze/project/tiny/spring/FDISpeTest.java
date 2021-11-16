@@ -4,8 +4,8 @@
 package firenze.project.tiny.spring;
 
 import com.thoughtworks.fusheng.integration.junit5.FuShengTest;
-import firenze.project.tiny.spring.di.ContainerConfig;
-import firenze.project.tiny.spring.di.FDIContainer;
+import firenze.project.tiny.spring.di.container.ContainerConfig;
+import firenze.project.tiny.spring.di.container.FDIContainer;
 import firenze.project.tiny.spring.example.*;
 
 @FuShengTest
