@@ -2,8 +2,19 @@ plugins {
     id 'java-library'
 }
 
+group = 'io.github.thxno'
+version = '1.0.0-snapshot'
+
 repositories {
     mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+    withJavadocJar()
+    withSourcesJar()
 }
 
 dependencies {
