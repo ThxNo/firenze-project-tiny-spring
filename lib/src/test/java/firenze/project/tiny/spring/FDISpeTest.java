@@ -4,6 +4,7 @@
 package firenze.project.tiny.spring;
 
 import com.thoughtworks.fusheng.integration.junit5.FuShengTest;
+import firenze.project.tiny.spring.di.container.AutoContainerConfig;
 import firenze.project.tiny.spring.di.container.ContainerConfig;
 import firenze.project.tiny.spring.di.container.FDIContainer;
 import firenze.project.tiny.spring.example.*;
@@ -12,7 +13,7 @@ import firenze.project.tiny.spring.example.*;
 public class FDISpeTest {
     private FDIContainer container;
     public void initContainer() {
-        ContainerConfig containerConfig = new MockContainerConfig();
+        ContainerConfig containerConfig = new AutoContainerConfig("firenze.project.tiny.spring.example");
         container = new FDIContainer(containerConfig);
     }
 

@@ -17,7 +17,7 @@ public class Binder<T> {
         return value;
     }
 
-    public Binder<T> to(Class<T> clazz) {
+    public Binder<T> to(Class<?> clazz) {
         value.setType(clazz);
         return this;
     }

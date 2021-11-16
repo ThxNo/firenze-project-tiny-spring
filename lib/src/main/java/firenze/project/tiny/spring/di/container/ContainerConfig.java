@@ -13,17 +13,16 @@ public abstract class ContainerConfig {
     private final List<Binder<?>> binders = new ArrayList<>();
     public abstract void init();
 
-    public ContainerConfig() {
-        init();
-    }
-
-    public <T> Binder bind(Class<T> clazz) {
+    public <T> Binder<T> bind(Class<T> clazz) {
         Binder<T> binder = new Binder<>(Key.get(clazz));
         binders.add(binder);
         return binder;
     }
 
     public Map<Key<?>, Value> toMap() {
-        return binders.stream().collect(Collectors.toMap(Binder::getKey, Binder::getValue));
+        return binders.stream().collect(Collectors.groupingBy(Binder::getKey))
+                .entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        it -> it.getValue().stream().map(Binder::getValue).findFirst().get()));
     }
 }
